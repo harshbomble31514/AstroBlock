@@ -64,7 +64,7 @@ Our AI gurus represent authentic wisdom traditions:
 
 ```bash
 # Clone and install dependencies
-git clone <(https://github.com/harshbomble31514/AstroBlock.git)>
+git clone https://github.com/harshbomble31514/AstroBlock.git
 cd astroblock
 pnpm install
 
