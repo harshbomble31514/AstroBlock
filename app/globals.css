@@ -1,0 +1,523 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Professional Royal Color Palette */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 263 70% 50%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 240 4% 16%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 4% 16%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 263 70% 50%;
+    --radius: 0.75rem;
+    
+    /* Royal Colors */
+    --royal-purple: 263 70% 50%;
+    --royal-blue: 217 91% 60%;
+    --royal-gold: 45 93% 58%;
+    --royal-silver: 210 20% 80%;
+    --royal-burgundy: 0 59% 41%;
+    --royal-emerald: 160 84% 39%;
+    --royal-navy: 222 84% 10%;
+    --royal-midnight: 240 15% 9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background text-foreground overflow-x-hidden;
+    background: 
+      radial-gradient(circle at 20% 80%, hsl(var(--royal-purple) / 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, hsl(var(--royal-blue) / 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, hsl(var(--royal-gold) / 0.05) 0%, transparent 50%),
+      linear-gradient(135deg, hsl(var(--royal-navy)) 0%, hsl(var(--royal-midnight)) 100%);
+    min-height: 100vh;
+    position: relative;
+  }
+  
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 25% 25%, hsl(var(--royal-purple) / 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, hsl(var(--royal-blue) / 0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: royalAmbient 20s ease-in-out infinite;
+  }
+}
+
+@layer components {
+  /* Royal Keyframe Animations */
+  @keyframes royalPulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+  
+  @keyframes royalGlow {
+    0%, 100% {
+      box-shadow: 
+        0 0 20px hsl(var(--royal-purple) / 0.3),
+        0 0 40px hsl(var(--royal-purple) / 0.1);
+    }
+    50% {
+      box-shadow: 
+        0 0 40px hsl(var(--royal-purple) / 0.6), 
+        0 0 80px hsl(var(--royal-blue) / 0.3),
+        0 0 120px hsl(var(--royal-purple) / 0.1);
+    }
+  }
+  
+  @keyframes royalShimmer {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+  
+  @keyframes royalFloat {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    25% {
+      transform: translateY(-10px) rotate(1deg);
+    }
+    50% {
+      transform: translateY(-15px) rotate(0deg);
+    }
+    75% {
+      transform: translateY(-5px) rotate(-1deg);
+    }
+  }
+  
+  @keyframes royalSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes royalFadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes royalSpin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes royalAmbient {
+    0%, 100% {
+      opacity: 0.8;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes royalBreathe {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+  }
+
+  /* Royal Gradient Classes */
+  .royal-gradient {
+    background: linear-gradient(135deg, 
+      hsl(var(--royal-purple)) 0%, 
+      hsl(var(--royal-blue)) 50%, 
+      hsl(var(--royal-purple)) 100%);
+  }
+  
+  .royal-gradient-text {
+    background: linear-gradient(135deg, 
+      hsl(var(--royal-purple)) 0%, 
+      hsl(var(--royal-blue)) 30%, 
+      hsl(var(--royal-gold)) 60%, 
+      hsl(var(--royal-purple)) 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: royalShimmer 3s ease-in-out infinite;
+  }
+  
+  .royal-gradient-border {
+    background: linear-gradient(135deg, 
+      hsl(var(--royal-purple)) 0%, 
+      hsl(var(--royal-blue)) 50%, 
+      hsl(var(--royal-gold)) 100%);
+    padding: 2px;
+    border-radius: calc(var(--radius) + 2px);
+  }
+  
+  .royal-card {
+    @apply relative overflow-hidden rounded-lg sm:rounded-xl border border-border/30 backdrop-blur-md;
+    background: linear-gradient(135deg, 
+      hsl(var(--card) / 0.8) 0%, 
+      hsl(var(--card) / 0.6) 50%,
+      hsl(var(--card) / 0.8) 100%);
+    box-shadow: 
+      0 4px 16px hsl(var(--royal-purple) / 0.1),
+      inset 0 1px 0 hsl(var(--royal-silver) / 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+  
+  @media (min-width: 640px) {
+    .royal-card {
+      box-shadow: 
+        0 8px 32px hsl(var(--royal-purple) / 0.15),
+        inset 0 1px 0 hsl(var(--royal-silver) / 0.1);
+    }
+  }
+  
+  .royal-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+      hsl(var(--royal-purple) / 0.1) 0%, 
+      transparent 40%, 
+      hsl(var(--royal-blue) / 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  
+  .royal-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 
+      0 12px 30px hsl(var(--royal-purple) / 0.2),
+      0 0 0 1px hsl(var(--royal-gold) / 0.2),
+      inset 0 1px 0 hsl(var(--royal-silver) / 0.2);
+  }
+  
+  @media (min-width: 640px) {
+    .royal-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 
+        0 25px 60px hsl(var(--royal-purple) / 0.25),
+        0 0 0 1px hsl(var(--royal-gold) / 0.2),
+        inset 0 1px 0 hsl(var(--royal-silver) / 0.2);
+    }
+  }
+  
+  .royal-card:hover::before {
+    opacity: 1;
+  }
+  
+  /* Royal Button Styles */
+  .royal-button {
+    @apply relative overflow-hidden font-medium;
+    background: linear-gradient(135deg, 
+      hsl(var(--royal-purple)) 0%, 
+      hsl(var(--royal-blue)) 100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+      0 4px 15px hsl(var(--royal-purple) / 0.25),
+      inset 0 1px 0 hsl(var(--royal-silver) / 0.2);
+  }
+  
+  .royal-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(255, 255, 255, 0.3), 
+      transparent);
+    transition: left 0.6s ease;
+  }
+  
+  .royal-button:hover::before {
+    left: 100%;
+  }
+  
+  .royal-button:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 
+      0 15px 35px hsl(var(--royal-purple) / 0.4),
+      0 0 0 1px hsl(var(--royal-gold) / 0.3),
+      inset 0 1px 0 hsl(var(--royal-silver) / 0.3);
+  }
+  
+  .royal-button:active {
+    transform: translateY(0) scale(1.02);
+  }
+  
+  /* Royal Gold Button */
+  .royal-button-gold {
+    @apply royal-button;
+    background: linear-gradient(135deg, 
+      hsl(var(--royal-gold)) 0%, 
+      hsl(var(--royal-silver)) 50%,
+      hsl(var(--royal-gold)) 100%);
+    color: hsl(var(--royal-navy));
+    box-shadow: 
+      0 4px 15px hsl(var(--royal-gold) / 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+  
+  .royal-button-gold:hover {
+    box-shadow: 
+      0 15px 35px hsl(var(--royal-gold) / 0.5),
+      0 0 0 1px hsl(var(--royal-purple) / 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+  
+  /* Animation Classes */
+  .animate-royal-pulse {
+    animation: royalPulse 3s ease-in-out infinite;
+  }
+  
+  .animate-royal-glow {
+    animation: royalGlow 4s ease-in-out infinite;
+  }
+  
+  .animate-royal-shimmer {
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(255, 255, 255, 0.1) 50%, 
+      transparent 100%);
+    background-size: 200% 100%;
+    animation: royalShimmer 2s ease-in-out infinite;
+  }
+  
+  .animate-royal-float {
+    animation: royalFloat 8s ease-in-out infinite;
+  }
+  
+  .animate-royal-slide-in {
+    animation: royalSlideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  
+  .animate-royal-fade-in {
+    animation: royalFadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  
+  .animate-royal-spin {
+    animation: royalSpin 2s linear infinite;
+  }
+  
+  .animate-royal-breathe {
+    animation: royalBreathe 4s ease-in-out infinite;
+  }
+  
+  /* Royal Text Effects */
+  .royal-text-glow {
+    text-shadow: 
+      0 0 10px hsl(var(--royal-purple) / 0.5),
+      0 0 20px hsl(var(--royal-purple) / 0.3),
+      0 0 30px hsl(var(--royal-blue) / 0.2);
+  }
+  
+  .royal-text-shine {
+    background: linear-gradient(135deg, 
+      hsl(var(--royal-gold)) 0%, 
+      hsl(var(--royal-silver)) 25%,
+      hsl(var(--royal-gold)) 50%, 
+      hsl(var(--royal-silver)) 75%,
+      hsl(var(--royal-gold)) 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: royalShimmer 3s ease-in-out infinite;
+  }
+  
+  /* Royal Header */
+  .royal-header {
+    @apply backdrop-blur-xl border-b border-border/30;
+    background: linear-gradient(135deg, 
+      hsl(var(--background) / 0.8) 0%, 
+      hsl(var(--background) / 0.6) 100%);
+    box-shadow: 
+      0 4px 20px hsl(var(--royal-purple) / 0.1),
+      inset 0 1px 0 hsl(var(--royal-silver) / 0.1);
+  }
+  
+  /* Royal Navigation */
+  .royal-nav-link {
+    @apply relative px-4 py-2 text-sm font-medium transition-all duration-300;
+    position: relative;
+  }
+  
+  .royal-nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      hsl(var(--royal-purple)), 
+      hsl(var(--royal-blue)));
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+  
+  .royal-nav-link:hover::before,
+  .royal-nav-link.active::before {
+    width: 100%;
+  }
+  
+  .royal-nav-link:hover {
+    color: hsl(var(--royal-gold));
+    text-shadow: 0 0 10px hsl(var(--royal-gold) / 0.5);
+  }
+  
+  /* Royal Loading Spinner */
+  .royal-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid transparent;
+    border-top: 3px solid hsl(var(--royal-purple));
+    border-right: 3px solid hsl(var(--royal-blue));
+    border-radius: 50%;
+    animation: royalSpin 1s linear infinite;
+    position: relative;
+  }
+  
+  .royal-spinner::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 3px solid transparent;
+    border-top: 3px solid hsl(var(--royal-gold));
+    border-radius: 50%;
+    animation: royalSpin 2s linear infinite reverse;
+  }
+  
+  /* Royal Form Elements */
+  .royal-input {
+    @apply w-full px-4 py-3 rounded-lg border border-border/30 bg-background/50 backdrop-blur-sm;
+    background: linear-gradient(135deg, 
+      hsl(var(--background) / 0.8) 0%, 
+      hsl(var(--background) / 0.6) 100%);
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px hsl(var(--royal-purple) / 0.1);
+  }
+  
+  .royal-input:focus {
+    outline: none;
+    border-color: hsl(var(--royal-purple) / 0.5);
+    box-shadow: 
+      0 0 0 3px hsl(var(--royal-purple) / 0.1),
+      inset 0 2px 4px hsl(var(--royal-purple) / 0.2);
+  }
+  
+  /* Royal Toast */
+  .royal-toast {
+    @apply royal-card;
+    backdrop-filter: blur(20px);
+    border-color: hsl(var(--royal-purple) / 0.3);
+  }
+  
+  /* Utility Classes */
+  .royal-backdrop {
+    backdrop-filter: blur(20px) saturate(180%);
+    background: hsl(var(--background) / 0.8);
+  }
+  
+  .royal-border {
+    border: 1px solid;
+    border-image: linear-gradient(135deg, 
+      hsl(var(--royal-purple) / 0.3), 
+      hsl(var(--royal-blue) / 0.3), 
+      hsl(var(--royal-gold) / 0.3)) 1;
+  }
+  
+  .royal-shadow {
+    box-shadow: 
+      0 10px 30px hsl(var(--royal-purple) / 0.2),
+      0 0 0 1px hsl(var(--royal-gold) / 0.1);
+  }
+  
+  .royal-shadow-lg {
+    box-shadow: 
+      0 20px 60px hsl(var(--royal-purple) / 0.3),
+      0 0 0 1px hsl(var(--royal-gold) / 0.2),
+      inset 0 1px 0 hsl(var(--royal-silver) / 0.1);
+  }
+}
+
+/* Gradient Text Animation */
+.gradient-text {
+  @apply royal-gradient-text;
+}
+
+/* Legacy Card Classes (Updated) */
+.astro-card {
+  @apply royal-card;
+}
+
+.reading-card {
+  @apply royal-card;
+  background: linear-gradient(135deg, 
+    hsl(var(--card) / 0.9) 0%, 
+    hsl(var(--card) / 0.7) 100%);
+}

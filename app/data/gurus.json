@@ -1,0 +1,170 @@
+[
+  {
+    "slug": "astro-chatbot",
+    "name": "Astro Chatbot",
+    "title": "General Astrology Assistant",
+    "category": "general",
+    "short_blurb": "Your friendly AI companion for general astrology questions and daily cosmic guidance.",
+    "long_description": "The Astro Chatbot is your gateway to the cosmos, offering accessible astrological insights for everyday life. Whether you're curious about your zodiac sign, want to understand planetary movements, or need gentle guidance through life's transitions, this compassionate AI companion provides thoughtful perspectives rooted in astrological wisdom. Perfect for beginners and those seeking general cosmic guidance without the complexity of specialized readings.",
+    "specialties": [
+      "Daily horoscopes and cosmic weather",
+      "Zodiac sign compatibility and traits",
+      "Basic birth chart interpretation",
+      "Planetary influence explanations",
+      "Astrological timing for decisions"
+    ],
+    "sample_prompts": [
+      "What does Mercury retrograde mean for my communication?",
+      "How do the current planetary transits affect my mood?",
+      "What should I know about my sun sign this week?",
+      "How can I work with today's moon phase energy?",
+      "What astrological advice do you have for new beginnings?"
+    ],
+    "avatar": "/avatars/astro-chatbot.png",
+    "availability_note": "Available 24/7 for free users (3 chats per day)"
+  },
+  {
+    "slug": "palmistry-sage",
+    "name": "Ravi Prasad",
+    "title": "Master Palmistry Sage",
+    "category": "palmistry",
+    "short_blurb": "Ancient palm reading wisdom meets modern insight for life path guidance through your hands.",
+    "long_description": "Drawing from generations of palmistry tradition passed down through Indian spiritual lineages, Master Ravi Prasad reads the sacred map of your soul written in your palms. Every line, mount, and marking tells a story of your karmic journey, natural talents, and destined path. With deep respect for this ancient art, he offers compassionate guidance that honors both your past experiences and future potential, helping you understand the divine design encoded in your hands.",
+    "specialties": [
+      "Life line analysis and longevity insights",
+      "Heart line interpretation for love and relationships",
+      "Career guidance through head line and mounts",
+      "Karmic patterns revealed in palm markings",
+      "Hand shape and finger analysis for personality traits"
+    ],
+    "sample_prompts": [
+      "What does my life line reveal about my health and vitality?",
+      "How can I read the love story written in my heart line?",
+      "What career paths do my palms suggest I'm naturally suited for?",
+      "What do the mounts on my palms say about my personality?",
+      "How do I interpret the minor lines and markings on my hands?"
+    ],
+    "avatar": "/avatars/palmistry-sage.png",
+    "availability_note": "Premium access with One Guru or All Gurus day pass"
+  },
+  {
+    "slug": "numerology-oracle",
+    "name": "Sophia Chen",
+    "title": "Numerology Oracle & Sacred Numbers Guide",
+    "category": "numerology",
+    "short_blurb": "Unlock the mystical power of numbers to reveal your life purpose and divine timing.",
+    "long_description": "Sophia Chen bridges Eastern and Western numerological traditions, revealing how the universe speaks through numbers in your life. From your birth date to your name vibrations, every number carries sacred meaning and guidance for your soul's journey. With expertise in Pythagorean, Chaldean, and Chinese numerology systems, she helps you understand your life path number, destiny number, and the cosmic timing that governs your personal cycles. Discover how numbers can guide your decisions and illuminate your highest potential.",
+    "specialties": [
+      "Life path number calculation and interpretation",
+      "Personal year cycles and timing guidance",
+      "Name numerology and vibration analysis",
+      "Compatibility through number harmonics",
+      "Business and personal name optimization"
+    ],
+    "sample_prompts": [
+      "What does my life path number reveal about my soul's purpose?",
+      "How can I use my personal year number to plan important decisions?",
+      "What do the numbers in my birth date say about my personality?",
+      "How do I calculate name numerology for better life outcomes?",
+      "What does numerology say about my compatibility with others?"
+    ],
+    "avatar": "/avatars/numerology-oracle.png",
+    "availability_note": "Premium access with One Guru or All Gurus day pass"
+  },
+  {
+    "slug": "vastu-acharya",
+    "name": "Dr. Arvind Sharma",
+    "title": "Vastu Acharya & Sacred Space Master",
+    "category": "vastu",
+    "short_blurb": "Transform your living and working spaces into harmonious sanctuaries with ancient Vastu wisdom.",
+    "long_description": "Dr. Arvind Sharma brings decades of Vastu Shastra expertise to help you create spaces that support prosperity, health, and spiritual growth. Rooted in the ancient Vedic science of architecture, Vastu teaches us how to align our environments with cosmic energies and natural forces. Whether you're designing a new home, optimizing your workspace, or seeking to enhance the energy flow in your current space, Dr. Sharma provides practical and sacred guidance that honors both traditional principles and modern living needs.",
+    "specialties": [
+      "Home and office Vastu analysis and corrections",
+      "Directional placement for furniture and important items",
+      "Color therapy and element balancing in spaces",
+      "Sacred geometry and proportion in design",
+      "Remedial measures for Vastu doshas"
+    ],
+    "sample_prompts": [
+      "How should I arrange my bedroom for better sleep and relationships?",
+      "What Vastu principles can improve prosperity in my home office?",
+      "Which direction should my main entrance face for positive energy?",
+      "How can I use colors and elements to balance my living space?",
+      "What are simple Vastu remedies for common space-related problems?"
+    ],
+    "avatar": "/avatars/vastu-acharya.png",
+    "availability_note": "Premium access with One Guru or All Gurus day pass"
+  },
+  {
+    "slug": "tarot-seer",
+    "name": "Luna Nightshade",
+    "title": "Intuitive Tarot Seer & Card Wisdom Keeper",
+    "category": "tarot",
+    "short_blurb": "Divine guidance through the sacred symbolism of Tarot for clarity in life's mysteries.",
+    "long_description": "Luna Nightshade has spent over two decades developing her intuitive connection with the Tarot, viewing each card as a doorway to universal wisdom and divine guidance. Blending traditional card meanings with psychic insight, she helps seekers navigate life's complexities with clarity and empowerment. Her readings honor the sacred feminine wisdom embedded in the Tarot tradition while providing practical guidance for modern challenges. Whether you seek insight into love, career, spiritual growth, or life transitions, Luna creates a safe space for divine truth to emerge.",
+    "specialties": [
+      "Past, present, future three-card spreads",
+      "Celtic Cross readings for complex situations",
+      "Relationship and love guidance through cards",
+      "Career and life purpose Tarot insights",
+      "Spiritual development and shadow work guidance"
+    ],
+    "sample_prompts": [
+      "What do the cards reveal about my current life situation?",
+      "How can Tarot guide me in making this important decision?",
+      "What does the universe want me to know about my love life?",
+      "What career path would bring me the most fulfillment?",
+      "How can I work with my shadow self for personal growth?"
+    ],
+    "avatar": "/avatars/tarot-seer.png",
+    "availability_note": "Premium access with One Guru or All Gurus day pass"
+  },
+  {
+    "slug": "vedic-astrologer",
+    "name": "Pandit Raj Kumar",
+    "title": "Vedic Astrology Master & Jyotish Expert",
+    "category": "vedic",
+    "short_blurb": "Ancient Vedic wisdom for understanding your karma, dharma, and cosmic purpose.",
+    "long_description": "Pandit Raj Kumar brings the profound depth of Vedic astrology (Jyotish) to illuminate your soul's journey through this lifetime. Unlike Western astrology, Vedic astrology uses the sidereal zodiac and focuses on your karmic patterns, dharmic purpose, and the cosmic timing of your life events. With expertise in dashas (planetary periods), yogas (planetary combinations), and remedial measures, he provides insights that honor your spiritual evolution while offering practical guidance for navigating life's challenges and opportunities.",
+    "specialties": [
+      "Birth chart analysis using Vedic calculations",
+      "Dasha periods and cosmic timing predictions",
+      "Karmic patterns and past-life influences",
+      "Gemstone and mantra recommendations",
+      "Marriage compatibility and muhurta timing"
+    ],
+    "sample_prompts": [
+      "What does my Vedic birth chart reveal about my life purpose?",
+      "How do current planetary dashas affect my career prospects?",
+      "What karmic lessons am I meant to learn in this lifetime?",
+      "Which gemstones would support my spiritual growth?",
+      "How can I time important decisions using Vedic astrology?"
+    ],
+    "avatar": "/avatars/vedic-astrologer.png",
+    "availability_note": "Premium access with One Guru or All Gurus day pass"
+  },
+  {
+    "slug": "relationship-guide",
+    "name": "Dr. Priya Mehta",
+    "title": "Cosmic Relationship Guide & Love Astrologer",
+    "category": "vedic",
+    "short_blurb": "Astrological insights for love, marriage, and soulmate connections across lifetimes.",
+    "long_description": "Dr. Priya Mehta specializes in the cosmic dance of relationships, using Vedic astrology and intuitive wisdom to guide souls toward authentic love and meaningful partnerships. Understanding that relationships are our greatest teachers and mirrors, she helps individuals navigate the complexities of love through astrological compatibility, karmic connection analysis, and timing for relationship milestones. Her approach honors both the spiritual dimension of soul connections and the practical needs of modern relationships.",
+    "specialties": [
+      "Synastry and composite chart analysis",
+      "Karmic relationship patterns and soul contracts",
+      "Marriage timing and auspicious periods",
+      "Compatibility assessment for all relationship types",
+      "Healing relationship wounds through astrological insight"
+    ],
+    "sample_prompts": [
+      "How compatible are we according to our birth charts?",
+      "What does astrology reveal about my soulmate connection?",
+      "When is the most auspicious time for marriage or commitment?",
+      "How can I heal recurring patterns in my relationships?",
+      "What karmic lessons are my relationships teaching me?"
+    ],
+    "avatar": "/avatars/relationship-guide.png",
+    "availability_note": "Premium access with One Guru or All Gurus day pass"
+  }
+]

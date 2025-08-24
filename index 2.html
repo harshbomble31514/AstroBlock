@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroProof — AI Astrology with On-Chain Proof (Aptos)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #0D1B2A;
+            font-family: 'Inter', 'Calibri', sans-serif;
+            color: #F3F4F6;
+            overflow: hidden;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            font-weight: 700;
+        }
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+        }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .slide-content {
+            width: 100%;
+            max-width: 1200px; /* Max width for 16:9 content area */
+            height: 100%;
+            max-height: 675px; /* Max height for 16:9 content area */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .speaker-notes {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #1F2937;
+            color: #F3F4F6;
+            padding: 1rem 2rem;
+            border-top: 2px solid #C39A48;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-out;
+            z-index: 100;
+            font-size: 0.9rem;
+        }
+        .speaker-notes.visible {
+            transform: translateY(0);
+        }
+        .speaker-notes ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+        }
+        .speaker-notes strong {
+            color: #2EC4B6;
+        }
+        .gradient-bg {
+            background: linear-gradient(to bottom right, #0D1B2A, #1F2937);
+        }
+        .card {
+            background-color: #F3F4F6;
+            color: #1F2937;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .gold-divider {
+            border-color: #C39A48;
+        }
+        .text-mint {
+            color: #2EC4B6;
+        }
+        .text-gold {
+            color: #C39A48;
+        }
+        .text-slate {
+             color: #1F2937;
+        }
+        .bg-deep-night {
+            background-color: #0D1B2A;
+        }
+        .icon {
+            width: 3rem;
+            height: 3rem;
+            stroke-width: 1.5;
+        }
+        .check-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            stroke: #2EC4B6;
+        }
+    </style>
+</head>
+<body class="bg-deep-night">
+
+    <!-- Slides Container -->
+    <main id="presentation-container">
+        <!-- Slide 1: Cover -->
+        <section class="slide active" data-notes="
+            <ul>
+                <li>Welcome everyone. We're here to introduce AstroProof.</li>
+                <li>It's a new way to interact with astrology, built on principles of privacy, verifiability, and user ownership.</li>
+                <li>We're leveraging the power of AI and the trust of the Aptos blockchain.</li>
+                <li>Let's dive into how we're making astrological readings provably authentic.</li>
+            </ul>
+        ">
+            <div class="slide-content text-center text-white">
+                <div class="gradient-bg w-full h-full rounded-xl flex flex-col justify-center items-center p-8">
+                    <h1 class="text-7xl font-bold mb-4">AstroProof</h1>
+                    <h2 class="text-4xl font-bold mb-8">AI Astrology with On-Chain Proof (Aptos)</h2>
+                    <p class="text-2xl">Snap-fast readings • Verifiable receipts • Privacy-first</p>
+                    <div class="absolute bottom-8 w-full flex justify-center items-center space-x-4">
+                        <span class="bg-slate-700/50 text-sm font-semibold py-1 px-3 rounded-full">Aptos</span>
+                        <span class="bg-slate-700/50 text-sm font-semibold py-1 px-3 rounded-full">Token v2</span>
+                        <span class="bg-slate-700/50 text-sm font-semibold py-1 px-3 rounded-full">AES-GCM</span>
+                        <span class="bg-slate-700/50 text-sm font-semibold py-1 px-3 rounded-full">Next.js</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 2: Elevator Pitch -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>Here's the core idea in one sentence.</li>
+                <li>You get a personal AI reading, but instead of a simple text file, you mint a cryptographic proof of it.</li>
+                <li>This proof lives on the Aptos blockchain as an NFT. You can share a link to verify it's authentic.</li>
+                <li>Crucially, your private birth details and the full reading remain encrypted and under your control.</li>
+            </ul>
+        ">
+            <div class="slide-content text-center">
+                 <h2 class="text-5xl font-bold mb-12 text-white">The AstroProof Pitch</h2>
+                 <div class="card p-12 max-w-4xl text-center">
+                    <p class="text-3xl leading-relaxed text-slate">
+                        Get an AI astrology reading and mint a cryptographic proof you own it. Share a public verify link; keep your private details encrypted.
+                        <br/><br/>
+                        Powered by <span class="font-bold text-mint">Aptos</span> for speed, low fees, and resource-safe Move.
+                    </p>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: The Problem -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>So, what problem are we solving? It comes down to trust and control.</li>
+                <li>Digital content is easy to fake. A screenshot of a reading means nothing—it can be edited.</li>
+                <li>Users' data is often locked away in apps. If the app disappears, so does your history.</li>
+                <li>And finally, people want to share interesting insights, but not their sensitive birth data. There's no good way to do that right now.</li>
+            </ul>
+        ">
+            <div class="slide-content">
+                <h2 class="text-5xl font-bold mb-12 text-white">The Problem: Trust is Fragile</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold text-slate mb-4">Fakeable & Ephemeral</h3>
+                        <p>Screenshots are easily faked. Digital readings can be edited or deleted by the provider, leaving no permanent, trustworthy record.</p>
+                    </div>
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold text-slate mb-4">Data Silos & Lack of Control</h3>
+                        <p>User data is trapped in centralized apps. Trust in astrologers and platforms is low, and users have no portability for their own records.</p>
+                    </div>
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold text-slate mb-4">The Privacy Paradox</h3>
+                        <p>Users want to share readings socially for fun or discussion, but doing so often means leaking private, sensitive information like birth details.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: The Solution -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>Our solution is a simple three-step journey: Read, Prove, and Share.</li>
+                <li>First, you get your AI-generated reading in seconds. It's fast and personalized.</li>
+                <li>Next, with one click, you mint a 'Report NFT' on Aptos. This isn't the reading itself—it's a verifiable receipt containing a timestamp and cryptographic hashes.</li>
+                <li>Finally, you get a public link to a verification page. Anyone can see the proof is real, but only you can decrypt and view the full, private report.</li>
+            </ul>
+        ">
+            <div class="slide-content text-center">
+                <h2 class="text-5xl font-bold mb-12 text-white">The Solution: Read, Prove, Share</h2>
+                <div class="flex items-center justify-center w-full max-w-5xl space-x-8">
+                    <!-- Step 1 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="card p-8 w-64 h-64 flex flex-col justify-center items-center">
+                             <svg class="icon text-slate mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10c0-4.42-2.87-8.17-7-9.58"/><path d="M12 2a10 10 0 0 0-7 9.58"/><path d="M2 12a10 10 0 0 0 10 10c4.42 0 8.17-2.87 9.58-7"/><path d="M2 12A10 10 0 0 1 12 2v10Z"/></svg>
+                            <h3 class="text-2xl font-bold text-slate">1. Read</h3>
+                            <p>Get an AI-powered astrology summary in seconds.</p>
+                        </div>
+                    </div>
+                    <div class="text-4xl text-gold font-mono">&rarr;</div>
+                    <!-- Step 2 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="card p-8 w-64 h-64 flex flex-col justify-center items-center">
+                            <svg class="icon text-slate mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+                            <h3 class="text-2xl font-bold text-slate">2. Prove</h3>
+                            <p>Mint a verifiable <b class="text-mint">Report NFT</b> with a timestamp & hashes.</p>
+                        </div>
+                    </div>
+                    <div class="text-4xl text-gold font-mono">&rarr;</div>
+                    <!-- Step 3 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="card p-8 w-64 h-64 flex flex-col justify-center items-center">
+                            <svg class="icon text-slate mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"/></svg>
+                            <h3 class="text-2xl font-bold text-slate">3. Share</h3>
+                            <p>Use a public verify page; keep the report encrypted & private.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Timeline -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>We built this fast. This isn't just an idea; it's a working MVP.</li>
+                <li>In under 12 hours, we had the core loop: wallet connection, AI reading, and encrypted storage.</li>
+                <li>We then added the on-chain proofs using Aptos Token v2 and built the public verification page.</li>
+                <li>From there, we implemented payments using APT to mint Access Pass NFTs for different tiers, built out the guru chat interface, and deployed everything. It's live.</li>
+            </ul>
+        ">
+            <div class="slide-content flex-col items-start w-full max-w-6xl">
+                <h2 class="text-5xl font-bold mb-16 text-white self-center">Timeline: What's Done So Far</h2>
+                <div class="w-full">
+                    <!-- Timeline Line -->
+                    <div class="w-full h-1 bg-gold/50 rounded-full relative">
+                        <!-- Milestones -->
+                        <div class="absolute -top-3 w-full flex justify-between">
+                            <div class="w-6 h-6 bg-gold rounded-full"></div>
+                            <div class="w-6 h-6 bg-gold rounded-full"></div>
+                            <div class="w-6 h-6 bg-gold rounded-full"></div>
+                            <div class="w-6 h-6 bg-gold rounded-full"></div>
+                            <div class="w-6 h-6 bg-gold rounded-full"></div>
+                            <div class="w-6 h-6 bg-gold rounded-full"></div>
+                        </div>
+                    </div>
+                    <!-- Milestone Descriptions -->
+                    <div class="w-full flex justify-between mt-8 text-center text-sm">
+                        <div class="w-1/6">
+                            <h4 class="font-bold text-mint">Ideation & MVP (≤12h)</h4>
+                            <p>Wallet connect, AI reading, encrypted save.</p>
+                        </div>
+                        <div class="w-1/6">
+                            <h4 class="font-bold text-mint">Proofs</h4>
+                            <p>Report NFT (Token v2), public verify page.</p>
+                        </div>
+                        <div class="w-1/6">
+                            <h4 class="font-bold text-mint">Payments</h4>
+                            <p>APT pay → <b class="text-white">AccessPass NFT</b> day-passes.</p>
+                        </div>
+                        <div class="w-1/6">
+                            <h4 class="font-bold text-mint">Tiers</h4>
+                            <p>Free (3/day), One-Guru (24h), All-Gurus (24h).</p>
+                        </div>
+                        <div class="w-1/6">
+                            <h4 class="font-bold text-mint">Directory & Chat</h4>
+                            <p>6 guru personas, gating, usage tracking.</p>
+                        </div>
+                        <div class="w-1/6">
+                            <h4 class="font-bold text-mint">Docs & Deploy</h4>
+                            <p>README, Firebase rules, explorer links.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: What Problem Do We Solve? (Business) -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>Let's frame this from a business perspective. What value are we creating?</li>
+                <li>First, verifiable authenticity. We're moving from 'trust me' to 'prove it'.</li>
+                <li>Second, selective shareability. Users can prove they got a reading without revealing the contents. This is a new social primitive.</li>
+                <li>And third, portability. The proof of your reading is a digital object you own in your wallet, independent of our app. It's a durable, user-owned record.</li>
+            </ul>
+        ">
+            <div class="slide-content text-center">
+                <h2 class="text-5xl font-bold mb-12 text-white">What Problem Do We Solve?</h2>
+                <div class="card p-12 max-w-4xl text-left space-y-6">
+                    <div class="flex items-start space-x-4">
+                        <svg class="w-8 h-8 text-mint flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate">Verifiable Authenticity</h3>
+                            <p class="text-lg">We provide undeniable proof that a specific reading was generated at a specific time, linked to a specific user session.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <svg class="w-8 h-8 text-mint flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.368a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path></svg>
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate">Shareability Without Oversharing</h3>
+                            <p class="text-lg">Users can share a public link to prove a reading's existence and authenticity without exposing any private details.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <svg class="w-8 h-8 text-mint flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate">Portable, User-Owned Records</h3>
+                            <p class="text-lg">The Report NFT is a durable asset in the user's wallet, independent of our app. It's a record they own forever.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: How Do We Solve It? (Technical) -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>Now for a simple technical breakdown. How does it actually work?</li>
+                <li>The on-chain part is minimal. The NFT stores cryptographic hashes, a timestamp, and a link to the encrypted data. That's it. No personal data ever touches the blockchain.</li>
+                <li>Off-chain, in a database like Firebase, we store the full report. But it's encrypted with a key only the user has. We can't read it.</li>
+                <li>The verification page pulls the hashes from the blockchain. Anyone can confirm the NFT is real. But only the owner, with their wallet, can connect, decrypt the off-chain data, and perform a deep verification that the hashes match.</li>
+            </ul>
+        ">
+            <div class="slide-content">
+                <h2 class="text-5xl font-bold mb-12 text-white">How We Solve It: A Simple Split</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+                    <div class="card p-8 text-center">
+                        <h3 class="text-2xl font-bold text-slate mb-4">On-Chain Proof</h3>
+                        <p>The Report NFT's properties store <b class="text-mint">hashes, a timestamp, and a URI</b>. This is the immutable, public proof.</p>
+                    </div>
+                    <div class="card p-8 text-center">
+                        <h3 class="text-2xl font-bold text-slate mb-4">Off-Chain Privacy</h3>
+                        <p>The full report is encrypted with <b class="text-mint">AES-GCM</b> and stored off-chain. It's completely user-controlled.</p>
+                    </div>
+                    <div class="card p-8 text-center">
+                        <h3 class="text-2xl font-bold text-slate mb-4">Hybrid Verification</h3>
+                        <p>Anyone can verify the on-chain proof. Only the <b class="text-mint">owner</b> can connect their wallet to decrypt and deep-verify the full report.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Why Blockchain At All? -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>This is a question we get a lot: 'Why not just use a normal database?'</li>
+                <li>A database proves ownership only if you trust us, the company. A blockchain proves ownership to anyone, forever, without trusting us.</li>
+                <li>So what does it add? Three things: decentralized trust, an immutable timestamp, and true user ownership, all without exposing personal data.</li>
+                <li>And is it overkill? No. We're only anchoring tiny pieces of data—hashes and links. The cost is cents, but the benefit is permanent, verifiable proof.</li>
+            </ul>
+        ">
+            <div class="slide-content w-full max-w-4xl">
+                <h2 class="text-5xl font-bold mb-12 text-white text-center">Why Blockchain At All?</h2>
+                <div class="card p-10 space-y-6">
+                    <div>
+                        <p class="text-lg font-bold text-slate">Q: “Why not a normal database?”</p>
+                        <p class="text-lg text-slate pl-4 border-l-4 border-mint/50 ml-2">A: A database proves ownership only if you trust <span class="font-bold">us</span>. Blockchain proves it to <span class="font-bold">anyone</span>, forever.</p>
+                    </div>
+                    <div class="border-t gold-divider"></div>
+                    <div>
+                        <p class="text-lg font-bold text-slate">Q: “What does blockchain add here?”</p>
+                        <p class="text-lg text-slate pl-4 border-l-4 border-mint/50 ml-2">A: <span class="font-bold text-mint">Trust, timestamp, and ownership</span> without exposing any personally identifiable information (PII).</p>
+                    </div>
+                     <div class="border-t gold-divider"></div>
+                    <div>
+                        <p class="text-lg font-bold text-slate">Q: “Isn’t it overkill?”</p>
+                        <p class="text-lg text-slate pl-4 border-l-4 border-mint/50 ml-2">A: We anchor only tiny hashes and URIs. The cost is cents, but the benefit is permanent, undeniable proof.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 9: What If We Don't Use Blockchain? -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>Let's consider the alternative. What if we built this without a blockchain?</li>
+                <li>First, there's no public verifiability. We're back to screenshots being the only 'proof'.</li>
+                <li>Second, users lose portability and ownership. If our server goes down, their records are gone. Trust is centralized with us.</li>
+                <li>And finally, there's no neutral, immutable timestamp. Any dispute about when a reading was created becomes one person's word against another's.</li>
+            </ul>
+        ">
+            <div class="slide-content text-center">
+                <h2 class="text-5xl font-bold mb-12 text-white">What If We Don't Use Blockchain?</h2>
+                <div class="card p-12 max-w-4xl text-left space-y-6">
+                     <div class="flex items-start space-x-4">
+                        <svg class="w-8 h-8 text-red-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate">No Public Verifiability</h3>
+                            <p class="text-lg">Without a public ledger, proof reverts to easily-faked screenshots. Trust remains centralized.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                         <svg class="w-8 h-8 text-red-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate">Users Lose Portability</h3>
+                            <p class="text-lg">Records are trapped in our database. If our server dies, user history and trust collapse.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                         <svg class="w-8 h-8 text-red-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate">No Neutral Timestamp</h3>
+                            <p class="text-lg">Disputes over when a reading was created become a matter of opinion versus opinion, with no objective truth.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 10: Why Aptos? -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>So why did we choose Aptos specifically? It excels in the areas that matter most for our use case.</li>
+                <li>Speed is critical for a good user experience. Aptos has sub-second finality, so minting a proof feels instant.</li>
+                <li>Fees are low and predictable, which is essential for an application that encourages frequent, small transactions.</li>
+                <li>And the Move language provides resource safety by design. This helps prevent entire classes of common smart contract bugs, which is crucial when you're building a system based on trust.</li>
+                <li>The developer experience with the TypeScript SDK and Wallet Adapter is also excellent.</li>
+            </ul>
+        ">
+            <div class="slide-content flex-col w-full max-w-5xl">
+                <h2 class="text-5xl font-bold mb-12 text-white">Why Aptos?</h2>
+                <div class="card w-full p-8">
+                    <table class="w-full text-left text-slate">
+                        <thead class="border-b-2 gold-divider">
+                            <tr>
+                                <th class="p-4 text-xl">Feature</th>
+                                <th class="p-4 text-xl text-center">Aptos</th>
+                                <th class="p-4 text-xl text-center">Many L1s</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b gold-divider/50">
+                                <td class="p-4 text-lg">Speed / Latency</td>
+                                <td class="p-4 text-center text-2xl font-bold text-mint">✓</td>
+                                <td class="p-4 text-center text-lg text-slate">– / Varies</td>
+                            </tr>
+                            <tr class="border-b gold-divider/50">
+                                <td class="p-4 text-lg">Fees</td>
+                                <td class="p-4 text-center text-2xl font-bold text-mint">✓</td>
+                                <td class="p-4 text-center text-lg text-slate">Volatile</td>
+                            </tr>
+                            <tr class="border-b gold-divider/50">
+                                <td class="p-4 text-lg">Move Safety</td>
+                                <td class="p-4 text-center text-2xl font-bold text-mint">✓</td>
+                                <td class="p-4 text-center text-lg text-slate">Lacks Resource Model</td>
+                            </tr>
+                            <tr class="border-b gold-divider/50">
+                                <td class="p-4 text-lg">Developer UX (TS SDK)</td>
+                                <td class="p-4 text-center text-2xl font-bold text-mint">✓</td>
+                                <td class="p-4 text-center text-lg text-slate">Varies</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 text-lg font-bold">Our Use-Case Fit</td>
+                                <td class="p-4 text-center text-2xl font-bold text-mint">✓</td>
+                                <td class="p-4 text-center text-lg text-slate">–</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-center mt-8 text-xl">Aptos gives us the trifecta: <span class="font-bold text-mint">fast UX</span>, <span class="font-bold text-mint">low cost</span>, and Move’s <span class="font-bold text-mint">resource safety</span>.</p>
+            </div>
+        </section>
+
+        <!-- Slide 11: Why Not Others? -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>To be clear, there are other great chains out there, but they involve different trade-offs.</li>
+                <li>Ethereum has the strongest network effects, but the cost and latency for minting frequent, small-value proofs like ours is prohibitive right now.</li>
+                <li>Solana is very fast and cheap, which is great, but we specifically prefer the safety guarantees of the Move resource model for our digital certificates.</li>
+                <li>And Polygon is a fantastic scaling solution for Ethereum, but again, Aptos wins for us on finality speed and the unique safety features of Move.</li>
+            </ul>
+        ">
+            <div class="slide-content w-full max-w-4xl">
+                <h2 class="text-5xl font-bold mb-12 text-white text-center">Why Not Others? (A Diplomatic View)</h2>
+                <div class="card p-10 space-y-6">
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate">Ethereum</h3>
+                        <p class="text-lg text-slate">Strongest network effects, but currently too expensive and slow for frequent, low-cost certificates like ours.</p>
+                    </div>
+                    <div class="border-t gold-divider"></div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate">Solana</h3>
+                        <p class="text-lg text-slate">Very fast and cheap, but we prefer Move’s resource model and the Aptos tooling for creating digital proofs.</p>
+                    </div>
+                     <div class="border-t gold-divider"></div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate">Polygon</h3>
+                        <p class="text-lg text-slate">Great L2 with lower fees than mainnet, but Aptos still wins on finality speed and Move's inherent safety for our design.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 12: How Blockchain Affects the Product -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>Integrating blockchain isn't just a feature; it fundamentally shapes the product.</li>
+                <li>The chain becomes the 'truth layer'. Our app is just a fast, private interface on top of that truth.</li>
+                <li>This creates social trust. A 'verify on-chain' link is more credible and viral than a screenshot. It's a powerful marketing and trust-building tool.</li>
+                <li>And it creates durable identity. Your ownership is tied to your wallet, not an email and password on our server. You truly own your records.</li>
+            </ul>
+        ">
+            <div class="slide-content text-center">
+                <h2 class="text-5xl font-bold mb-12 text-white">How Blockchain Affects the Product</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold text-slate mb-4">A Product Truth Layer</h3>
+                        <p>The blockchain acts as the ultimate source of truth. Our application is a fast, privacy-preserving UI built on top of it.</p>
+                    </div>
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold text-slate mb-4">Enhanced Social Trust</h3>
+                        <p>A “verify on-chain” link carries more weight and credibility than a simple screenshot, increasing virality and user confidence.</p>
+                    </div>
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold text-slate mb-4">Durable, Wallet-Based Identity</h3>
+                        <p>Ownership is tied directly to the user's wallet, not our login system. This provides a portable and persistent identity.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Slide 13: Token Design -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>We use two types of NFTs, both built on the Token v2 standard.</li>
+                <li>The first is the Report NFT, which you get for each reading. Its on-chain properties are simple: hashes of the session and report, a creation timestamp, a link to the encrypted data, and the app version.</li>
+                <li>The second is the Access Pass NFT, which acts as a subscription. It defines your access tier, which guru you can talk to, and when it expires.</li>
+                <li>Both are designed to be non-PII, with immutable properties, and are fully owned by the user.</li>
+            </ul>
+        ">
+            <div class="slide-content w-full max-w-5xl">
+                <h2 class="text-5xl font-bold mb-12 text-white text-center">Token Design (Token v2)</h2>
+                <div class="flex space-x-8 w-full">
+                    <!-- Report NFT -->
+                    <div class="card p-8 w-1/2">
+                        <h3 class="text-2xl font-bold text-slate mb-4">Report NFT <span class="text-base font-normal">(Per Reading)</span></h3>
+                        <div class="border-t-2 gold-divider mb-4"></div>
+                        <ul class="space-y-2 text-slate text-lg">
+                            <li><span class="font-bold text-mint">properties:</span></li>
+                            <li class="ml-4">- session_hash</li>
+                            <li class="ml-4">- report_hash</li>
+                            <li class="ml-4">- created_at</li>
+                            <li class="ml-4">- uri (to encrypted blob)</li>
+                            <li class="ml-4">- app_version</li>
+                        </ul>
+                    </div>
+                    <!-- AccessPass NFT -->
+                    <div class="card p-8 w-1/2">
+                        <h3 class="text-2xl font-bold text-slate mb-4">AccessPass NFT <span class="text-base font-normal">(Subscriptions)</span></h3>
+                        <div class="border-t-2 gold-divider mb-4"></div>
+                        <ul class="space-y-2 text-slate text-lg">
+                            <li><span class="font-bold text-mint">properties:</span></li>
+                            <li class="ml-4">- tier (one-guru, all-gurus)</li>
+                            <li class="ml-4">- guru_slug</li>
+                            <li class="ml-4">- issued_at</li>
+                            <li class="ml-4">- expires_at</li>
+                            <li class="ml-4">- app_version</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-center mt-8 text-xl">Both tokens are <span class="font-bold">non-PII</span>, have <span class="font-bold">immutable properties</span>, and are <span class="font-bold">user-owned</span>.</p>
+            </div>
+        </section>
+
+        <!-- Slide 14: Currency & Transactions -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>For payments, we keep it simple. Users pay in the native Aptos token, APT. We may add USDC later.</li>
+                <li>A key point of clarification: we don't use NFTs as currency.</li>
+                <li>You pay with APT. The NFTs you receive are your receipts and your access keys.</li>
+                <li>They are functional digital objects that prove ownership and grant rights, which users can then display, transfer, or use for verification.</li>
+            </ul>
+        ">
+            <div class="slide-content w-full max-w-4xl">
+                <h2 class="text-5xl font-bold mb-12 text-white text-center">Currency & Transactions</h2>
+                <div class="card p-10 space-y-6">
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate">Transaction Currency</h3>
+                        <p class="text-lg text-slate">We use native <span class="font-bold text-mint">APT</span> for all payments to ensure simplicity and low friction. We may add stablecoins like USDC in the future.</p>
+                    </div>
+                    <div class="border-t gold-divider"></div>
+                    <div>
+                        <p class="text-lg font-bold text-slate">Q: “Why NFTs for transactions?”</p>
+                        <p class="text-lg text-slate pl-4 border-l-4 border-mint/50 ml-2">A: We don't. Users <span class="font-bold">pay with APT</span>. The NFTs are <span class="font-bold">receipts & access rights</span>, not the currency itself. They are functional assets that users can display, transfer, or verify.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 15: Architecture -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>Here's a high-level look at our architecture. It's a hybrid on-chain and off-chain model.</li>
+                <li>On the left, the user experience: The client, built in Next.js, handles hashing and encryption on the user's device. The encrypted report is then uploaded to a service like Firebase.</li>
+                <li>On the right, the trust layer: The client sends the hashes and URI to an Aptos contract to mint a Token v2 NFT.</li>
+                <li>The verification page reads data directly from Aptos. Anyone can do this. But only the owner, by connecting their wallet, can then fetch the encrypted data from Firebase and decrypt it to perform the final, deep verification.</li>
+                <li>The key takeaway: No PII is ever on-chain.</li>
+            </ul>
+        ">
+            <div class="slide-content w-full max-w-6xl">
+                <h2 class="text-5xl font-bold mb-12 text-white text-center">Architecture: On-Chain Trust, Off-Chain Privacy</h2>
+                <div class="flex justify-between items-center w-full">
+                    <!-- Off-Chain -->
+                    <div class="w-2/5 text-center">
+                        <h3 class="text-3xl font-bold text-white mb-4">Off-Chain (Client & Storage)</h3>
+                        <div class="card p-6 space-y-4">
+                            <div class="bg-gray-200 p-4 rounded-md text-slate">Client (Next.js)</div>
+                            <div class="text-2xl text-gold self-center">&darr;</div>
+                            <div class="bg-gray-200 p-4 rounded-md text-slate">Hash & Encrypt (AES-GCM)</div>
+                            <div class="text-2xl text-gold self-center">&darr;</div>
+                            <div class="bg-gray-200 p-4 rounded-md text-slate">Upload Encrypted Blob (Firebase)</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Arrows -->
+                    <div class="w-1/5 flex flex-col items-center text-gold text-2xl font-mono">
+                        <p class="text-white text-sm mb-2">Mint Request (Hashes + URI)</p>
+                        <span>&rarr;&rarr;&rarr;&rarr;&rarr;&rarr;&rarr;&rarr;&rarr;</span>
+                        <br/>
+                        <span>&larr;&larr;&larr;&larr;&larr;&larr;&larr;&larr;&larr;</span>
+                        <p class="text-white text-sm mt-2">Read NFT Data</p>
+                    </div>
+
+                    <!-- On-Chain -->
+                    <div class="w-2/5 text-center">
+                        <h3 class="text-3xl font-bold text-white mb-4">On-Chain (Aptos)</h3>
+                        <div class="card p-6 space-y-4">
+                            <div class="bg-gray-200 p-4 rounded-md text-slate">Aptos (Token v2)</div>
+                             <div class="text-2xl text-gold self-center">&darr;</div>
+                            <div class="bg-gray-200 p-4 rounded-md text-slate">Mint / Read NFT</div>
+                             <div class="text-2xl text-gold self-center">&darr;</div>
+                            <div class="bg-gray-200 p-4 rounded-md text-slate">Verify Page Reads On-Chain Data</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center mt-8 text-2xl font-bold text-mint">Only hashes + URIs on-chain. No PII on-chain.</p>
+            </div>
+        </section>
+
+        <!-- Slide 16: Privacy & Security -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>Privacy and security are not afterthoughts; they are core to our design.</li>
+                <li>All encryption happens on the user's device. The keys never leave the user, meaning we can never access their private data.</li>
+                <li>The on-chain hashes prevent tampering. If the off-chain data is changed, the hashes won't match, and the verification will fail.</li>
+                <li>And of course, we include clear consent forms and disclaimers. This is for guidance and entertainment, not medical, legal, or financial advice.</li>
+            </ul>
+        ">
+            <div class="slide-content text-center">
+                <h2 class="text-5xl font-bold mb-12 text-white">Privacy & Security by Design</h2>
+                <div class="card p-12 max-w-4xl text-left space-y-6">
+                     <div class="flex items-start space-x-4">
+                        <svg class="w-8 h-8 text-mint flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate">Client-Side Encryption</h3>
+                            <p class="text-lg">Encryption happens on the user's device. Keys never leave the user, and we can never decrypt their private data.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                         <svg class="w-8 h-8 text-mint flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate">Tamper-Proof Hashing</h3>
+                            <p class="text-lg">Public on-chain hashes ensure the integrity of the off-chain data. Any modification is immediately detectable.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <svg class="w-8 h-8 text-mint flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate">Consent and Disclaimers</h3>
+                            <p class="text-lg">We provide clear disclaimers for safe guidance. This is not a substitute for medical, legal, or financial advice.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 17: Economics -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>Let's talk about the business model. It's simple and sustainable.</li>
+                <li>Our costs are extremely low. On testnet, it's effectively zero. On mainnet, minting and verifying a proof will cost pennies.</li>
+                <li>Revenue comes from selling day-passes. We've priced them affordably: 0.2 APT for access to one guru for 24 hours, and 0.5 APT for all of them.</li>
+                <li>As the chart shows, our contribution margin is positive even at a very small scale, and our infrastructure is elastic, so we can scale efficiently.</li>
+            </ul>
+        ">
+            <div class="slide-content w-full max-w-5xl">
+                <h2 class="text-5xl font-bold mb-12 text-white text-center">Economics</h2>
+                <div class="flex space-x-8 w-full">
+                    <!-- Text -->
+                    <div class="w-1/2 card p-8">
+                        <h3 class="text-2xl font-bold text-slate mb-4">Costs</h3>
+                        <p class="mb-4">Testnet costs are effectively <b class="text-mint">$0</b>. Mainnet costs for minting and verification are pennies per transaction.</p>
+                        <div class="border-t-2 gold-divider my-4"></div>
+                        <h3 class="text-2xl font-bold text-slate mb-4">Revenue</h3>
+                        <p>Day-passes sold for APT:</p>
+                        <ul class="list-disc ml-6 mt-2">
+                            <li>One-Guru Pass: <b class="text-mint">0.20 APT</b> (24h)</li>
+                            <li>All-Gurus Pass: <b class="text-mint">0.50 APT</b> (24h)</li>
+                        </ul>
+                    </div>
+                    <!-- Chart -->
+                    <div class="w-1/2 card p-8">
+                        <h3 class="text-2xl font-bold text-slate mb-4 text-center">Unit Economics (Per Pass)</h3>
+                        <canvas id="economicsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 18: Scalability, Feasibility, Technology -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>Can this scale? Yes. Our design is inherently scalable. We rely on Aptos's high throughput, client-side cryptography, and very lightweight on-chain writes.</li>
+                <li>Is it feasible? It's already built. We shipped the full MVP in just 12 hours, proving the core concept is not only feasible but quick to implement.</li>
+                <li>And what's our tech stack? It's modern and robust: Next.js and Tailwind for the frontend, Firebase for our off-chain storage, AES-GCM for encryption, and of course the Aptos TypeScript SDK and Token v2 standard.</li>
+            </ul>
+        ">
+            <div class="slide-content">
+                <h2 class="text-5xl font-bold mb-12 text-white">Scalability, Feasibility, Technology</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold text-slate mb-4">Scalability</h3>
+                        <p>Aptos throughput + client-side crypto + lightweight on-chain writes = highly scalable architecture.</p>
+                    </div>
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold text-slate mb-4">Feasibility</h3>
+                        <p>All core features are already built. The 12-hour MVP is shipped and functional, demonstrating high feasibility.</p>
+                    </div>
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold text-slate mb-4">Technology</h3>
+                        <p>Next.js, Tailwind, Firebase, AES-GCM, Aptos TS SDK, Token v2.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 19: Demo Flow -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>The user flow is designed to be as smooth as possible.</li>
+                <li>It starts with connecting your Aptos wallet.</li>
+                <li>You get your AI reading, then save it, which encrypts it locally.</li>
+                <li>You approve a simple transaction to pay with APT.</li>
+                <li>This atomically mints your Access Pass and your first Report NFT.</li>
+                <li>Finally, you can immediately open the public verification page to see your on-chain proof.</li>
+            </ul>
+        ">
+            <div class="slide-content text-center">
+                <h2 class="text-5xl font-bold mb-12 text-white">Demo Flow: 5 Simple Steps</h2>
+                <div class="flex items-center justify-center w-full max-w-6xl space-x-4">
+                    <div class="card p-4 text-center text-slate">Connect Wallet</div>
+                    <div class="text-2xl text-gold font-mono">&rarr;</div>
+                    <div class="card p-4 text-center text-slate">Get Reading & Save</div>
+                    <div class="text-2xl text-gold font-mono">&rarr;</div>
+                    <div class="card p-4 text-center text-slate">Pay APT</div>
+                    <div class="text-2xl text-gold font-mono">&rarr;</div>
+                    <div class="card p-4 text-center text-slate">Mint NFTs</div>
+                    <div class="text-2xl text-gold font-mono">&rarr;</div>
+                    <div class="card p-4 text-center text-slate">Open Verify Page</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 20: FAQ -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>Let's address some tough questions we anticipate. What about gas spikes? Our on-chain data is minimal, so we're less affected, and we can build in retries.</li>
+                <li>Couldn't we fake it off-chain? No, the on-chain hash and timestamp would immediately reveal any tampering.</li>
+                <li>Why does Move matter? Its resource safety model prevents entire categories of bugs, making our contracts more secure.</li>
+                <li>What if a user loses their key? By design, we cannot decrypt their data. We prioritize privacy and user control over our ability to recover data.</li>
+                <li>And why not store everything on-chain? It's a balance of privacy and cost. We only store the minimal data required for public proof.</li>
+            </ul>
+        ">
+            <div class="slide-content w-full max-w-4xl">
+                <h2 class="text-5xl font-bold mb-12 text-white text-center">FAQ: Simple Answers to Complex Questions</h2>
+                <div class="card p-8 space-y-4 text-sm">
+                    <p><b class="text-slate">Q: What about gas spikes?</b><br/><span class="text-slate/80">A: Minimal on-chain data makes us resilient. We can add retries & alerts.</span></p>
+                    <p><b class="text-slate">Q: Couldn’t we fake it off-chain?</b><br/><span class="text-slate/80">A: No. The on-chain hash + timestamp would make any faking instantly detectable.</span></p>
+                    <p><b class="text-slate">Q: Why does Move matter?</b><br/><span class="text-slate/80">A: Resource safety reduces whole classes of contract bugs, making our proofs more reliable.</span></p>
+                    <p><b class="text-slate">Q: What if a user loses their key?</b><br/><span class="text-slate/80">A: We cannot decrypt their data. This is by design: privacy > convenience.</span></p>
+                    <p><b class="text-slate">Q: Why not store everything on-chain?</b><br/><span class="text-slate/80">A: For privacy and cost. We only store the absolute minimum required for public verification.</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 21: Risks & Mitigations -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>We've also thought about the risks. AI can be variable, so we use fixed templates and versioning to ensure consistency.</li>
+                <li>Wallet friction is a real issue in web3. We'll offer a guest mode so users can try it out before needing to connect or mint, and provide clear links to faucets for testnet APT.</li>
+                <li>Payment issues like under or overpaying can happen. We have checks and error handling, and we plan to implement an atomic 'Pay-to-Mint' function in Move to make this a single, foolproof transaction.</li>
+            </ul>
+        ">
+            <div class="slide-content w-full max-w-4xl">
+                <h2 class="text-5xl font-bold mb-12 text-white text-center">Risks & Mitigations</h2>
+                <div class="card w-full p-8">
+                    <table class="w-full text-left text-slate">
+                        <thead class="border-b-2 gold-divider">
+                            <tr><th class="p-4 text-xl">Risk</th><th class="p-4 text-xl">Mitigation</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b gold-divider/50">
+                                <td class="p-4 text-lg">AI Variability</td>
+                                <td class="p-4 text-lg">Fixed templates + versioning in NFT properties.</td>
+                            </tr>
+                            <tr class="border-b gold-divider/50">
+                                <td class="p-4 text-lg">Wallet Friction</td>
+                                <td class="p-4 text-lg">Guest mode until mint; clear faucet links for testnet.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 text-lg">Under/Overpayment</td>
+                                <td class="p-4 text-lg">Error handling + planned atomic Pay-to-Mint function.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 22: Future Scope -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>This MVP is just the beginning. We have a clear roadmap for the future.</li>
+                <li>First, we'll build that atomic Pay-to-Mint function to streamline transactions.</li>
+                <li>We'll add USDC as a payment option using a Fungible Asset standard.</li>
+                <li>Longer-term, we plan to onboard verified human astrologers and use smart contracts for escrow services.</li>
+                <li>And beyond that, we see opportunities for compatibility reports between users, referral programs, and partnerships with other web3 social apps.</li>
+            </ul>
+        ">
+            <div class="slide-content text-center">
+                <h2 class="text-5xl font-bold mb-12 text-white">Future Scope</h2>
+                <div class="card p-12 max-w-4xl text-left space-y-4">
+                    <p class="text-xl text-slate">- <b class="text-mint">Atomic Pay-to-Mint:</b> A single, seamless Move transaction.</p>
+                    <p class="text-xl text-slate">- <b class="text-mint">USDC Checkout:</b> Integrate a standard Fungible Asset for payments.</p>
+                    <p class="text-xl text-slate">- <b class="text-mint">Verified Human Astrologers:</b> Onboard real experts with on-chain escrow.</p>
+                    <p class="text-xl text-slate">- <b class="text-mint">Social Features:</b> Compatibility cards, referrals, analytics, and partnerships.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 23: Call to Action -->
+        <section class="slide" data-notes="
+            <ul>
+                <li>Thank you. We invite you to experience AstroProof for yourself.</li>
+                <li>You can start with the free tier, which gives you three chats per day.</li>
+                <li>When you're ready, get a day-pass, mint your first on-chain proof, and share your verification link.</li>
+                <li>We're excited to build a more trustworthy and private future for personalized guidance.</li>
+            </ul>
+        ">
+            <div class="slide-content text-center text-white">
+                <div class="gradient-bg w-full h-full rounded-xl flex flex-col justify-center items-center p-8">
+                    <h2 class="text-6xl font-bold mb-8">Get Your Proof</h2>
+                    <p class="text-2xl mb-10 max-w-3xl">
+                        Try the free tier (3 chats/day).
+                        <br/>
+                        Get a day-pass, mint your first proof, and share your verify link.
+                    </p>
+                    <button class="bg-mint text-deep-night font-bold py-4 px-8 rounded-lg text-2xl hover:bg-opacity-90 transition-colors">
+                        Try AstroProof Now
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Navigation -->
+    <div class="fixed bottom-5 right-5 z-50 flex items-center space-x-2">
+        <button id="prev-btn" class="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+        <span id="slide-counter" class="text-white text-lg font-mono">1 / 23</span>
+        <button id="next-btn" class="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+    </div>
+    
+    <!-- Speaker Notes Toggle -->
+    <button id="notes-toggle" class="fixed bottom-5 left-5 z-50 bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors text-white">
+        Notes (Press 'S')
+    </button>
+
+    <!-- Speaker Notes Panel -->
+    <div id="speaker-notes-panel" class="speaker-notes">
+        <h4 class="font-bold text-lg mb-2">Speaker Notes:</h4>
+        <div id="speaker-notes-content"></div>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const slideCounter = document.getElementById('slide-counter');
+        const notesToggle = document.getElementById('notes-toggle');
+        const speakerNotesPanel = document.getElementById('speaker-notes-panel');
+        const speakerNotesContent = document.getElementById('speaker-notes-content');
+        
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            currentSlide = index;
+            slideCounter.textContent = `${index + 1} / ${slides.length}`;
+            updateButtons();
+            updateSpeakerNotes();
+        }
+
+        function updateButtons() {
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+            prevBtn.classList.toggle('opacity-50', currentSlide === 0);
+            nextBtn.classList.toggle('opacity-50', currentSlide === slides.length - 1);
+        }
+        
+        function updateSpeakerNotes() {
+            const notes = slides[currentSlide].getAttribute('data-notes');
+            if (notes) {
+                speakerNotesContent.innerHTML = notes.trim();
+            } else {
+                speakerNotesContent.innerHTML = '<ul><li>No notes for this slide.</li></ul>';
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+        
+        notesToggle.addEventListener('click', () => {
+            speakerNotesPanel.classList.toggle('visible');
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key.toLowerCase() === 's') {
+                 speakerNotesPanel.classList.toggle('visible');
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+        
+        // Chart.js implementation for slide 17
+        const economicsChartCtx = document.getElementById('economicsChart');
+        if (economicsChartCtx) {
+            new Chart(economicsChartCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['One-Guru Pass (0.2 APT)', 'All-Gurus Pass (0.5 APT)'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [0.2, 0.5],
+                        backgroundColor: '#2EC4B6',
+                        borderColor: '#2EC4B6',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                    }, {
+                        label: 'On-Chain Cost (Est.)',
+                        data: [0.005, 0.005],
+                        backgroundColor: '#C39A48',
+                        borderColor: '#C39A48',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: '#1F2937'
+                            },
+                            grid: {
+                                color: 'rgba(31, 41, 55, 0.1)'
+                            },
+                            title: {
+                                display: true,
+                                text: 'APT',
+                                color: '#1F2937'
+                            }
+                        },
+                        x: {
+                             ticks: {
+                                color: '#1F2937'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#1F2937'
+                            }
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+    </script>
+</body>
+</html>
